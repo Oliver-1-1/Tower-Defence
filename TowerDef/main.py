@@ -4,7 +4,7 @@ import Map
 import Tower
 import math
 import TowerMenu
-import os
+import TextDisplay
 import WaveSystem
 
 pygame.init()
@@ -28,7 +28,10 @@ WaveObj = WaveSystem.WaveSystem()
 Enemy_list = []
 isWave = True
 
+textEditor = TextDisplay.TextDisplay()
+textEditor.change_text("Wave 1")
 while True:
+    dt = time.tick(60)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -37,6 +40,7 @@ while True:
             for i in range(WaveObj.calc_enemies(2)):
                 Enemy_list.append(Enemy.Enemy("tile\\PNG\\Default size\\towerDefense_tile245.png", WaveObj.calc_enemies_starting_pos((840, -400), i)))
                 isWave = False
+
         # The code that decides what you placed on the map and what to draw.
         if Menu.check:
             for i in range(len(Menu.towers_placed_list)):
@@ -64,19 +68,17 @@ while True:
     # BasicEnemy.health = BasicTower.shoot(BasicEnemy.health)
 
     tiles.draw(window)
-
-    BasicEnemy.move(window)
+    BasicEnemy.move(window, dt)
     towerObj.draw_indicator(window)
 
     for i in tow:
-        i.rotate_tower_to_enemy(i.calc_angle(BasicEnemy.pos, i.pos))
+        i.rotate_tower_to_enemy(i.calc_angle(Enemy_list[len(Enemy_list) - 1].pos, i.pos))
         if not menu:
             i.draw(window)
     for i in Enemy_list:
-        i.move(window)
+        i.move(window, dt)
     if menu:
         Menu.open_tower_menu(window)
-
+    textEditor.draw_text(window)
     pygame.display.flip()
-    print(time.get_fps())
-    time.tick(1200)
+

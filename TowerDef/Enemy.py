@@ -7,11 +7,11 @@ class Enemy:
         self.pos = self.image.get_rect()
         self.pos.center = pos
         self.health = 100
-        self.speed = 2
+        self.speed = 0.1
 
-    def move(self, window):
+    def move(self, window, dt):
         if not self.health <= 0:
-            self.pos.move_ip(0, self.speed)
+            self.pos.move_ip(0, self.speed * dt)
             window.blit(self.image, self.pos)
 
 

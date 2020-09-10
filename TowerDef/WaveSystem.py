@@ -9,5 +9,5 @@ class WaveSystem:
         return self.enemy_starting_number + int(wave_number * self.enemy_adding_factor)
 
     def calc_enemies_starting_pos(self, starting_coordinate, num):
-        return (starting_coordinate[0], num * self.enemy_distancing_number + starting_coordinate[1])
+        return starting_coordinate[0], num * self.enemy_distancing_number + starting_coordinate[1]
 

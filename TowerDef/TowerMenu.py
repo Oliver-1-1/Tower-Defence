@@ -17,6 +17,7 @@ class TowerMenu:
         self.check = False
         # TileNumber that is usable in directory
         self.UsableTileList = [203, 204, 205, 206, 226, 227, 229, 245, 246, 247, 248, 249, 250, 251, 252, 291, 292, 268, 269]
+
         for imageNum in self.UsableTileList:
             self.image_path_list.append(
                 pygame.image.load("tile\\PNG\\Default size\\towerDefense_tile" + str(imageNum) + ".png"))
@@ -47,12 +48,14 @@ class TowerMenu:
             self.rect_indicator.move_ip(0, -64)
         if event.key == pygame.K_s:
             self.rect_indicator.move_ip(0, 64)
+
         if event.key == pygame.K_RETURN:
             if self.active:
                 self.towers_placed_list.append(self.q[self.index])
                 self.rect_indicator = pygame.Rect(0, 0, self.q[0].width, self.q[0].height)
                 self.active = False
                 self.check = True
+
             if self.active == False:
                 for index, i in enumerate(self.q):
                     if self.rect_indicator == i:

@@ -24,11 +24,13 @@ class Tower:
             self.pos.move_ip(0, -64)
         if event.key == pygame.K_s:
             self.pos.move_ip(0, 64)
+
         if event.key == pygame.K_b:
             for index, i in enumerate(all_towers):
                 if self.pos.centerx == i.centerx and self.pos.centery == i.centery:
                     self.index = index
                     self.active = True
+
         if self.active:
             if event.key == pygame.K_RETURN:
                 mySet = set(blocked_tiles)
