@@ -5,15 +5,17 @@ import math
 
 class Tower:
 
-    def __init__(self, image,rect , image_bullet_location):
+    def __init__(self, image, rect, image_bullet_location):
         self.image = image
-        self.image_bullet = pygame.image.load(image_bullet_location)
         self.pos = rect
-        self.pos_bullet = self.image_bullet.get_rect()
         self.original_image = self.image
         self.original_pos = self.pos
         self.active = False
         self.index = -1
+
+        self.image_bullet = pygame.image.load(image_bullet_location)
+        self.pos_bullet = self.image_bullet.get_rect()
+        self.bullet_speed = 0.5
 
     def place_indicator(self, event, blocked_tiles, all_towers):
         if event.key == pygame.K_d:
@@ -53,11 +55,30 @@ class Tower:
 
     def calc_angle(self, enemy_pos, towerPos):
         a, b = enemy_pos.centerx - self.pos.centerx, \
-            enemy_pos.centery - self.pos.centery
+               enemy_pos.centery - self.pos.centery
         angle = math.degrees(-math.atan2(b, a))
 
         return angle - 90
 
-
     def rotate_tower_to_enemy(self, angle):
         self.image = pygame.transform.rotate(self.original_image, angle)
+
+    def calc_prediction(self, enemy_pos, enemy_speed):
+        a, b = enemy_pos.centerx - self.pos.centerx, \
+               enemy_pos.centery - self.pos.centery
+
+        hypo = math.sqrt(a ** 2 + b ** 2)
+        time = hypo / self.bullet_speed
+
+        distance_travelled = time * enemy_speed
+
+        final_b = distance_travelled + b
+        angle = math.degrees(-math.atan2(final_b, a))
+        return angle - 90
+
+    def move_bullet(self):
+        self.pos_bullet.move_ip(1, 1)
+
+    def draw_bullet(self, window):
+        window.blit(self.image_bullet, self.pos_bullet)
+

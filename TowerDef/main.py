@@ -72,13 +72,16 @@ while True:
     towerObj.draw_indicator(window)
 
     for i in tow:
-        i.rotate_tower_to_enemy(i.calc_angle(Enemy_list[len(Enemy_list) - 1].pos, i.pos))
+        i.rotate_tower_to_enemy(i.calc_prediction(Enemy_list[len(Enemy_list) - 1].pos, BasicEnemy.speed))
+        i.move_bullet()
+        i.draw_bullet(window)
         if not menu:
             i.draw(window)
     for i in Enemy_list:
         i.move(window, dt)
     if menu:
         Menu.open_tower_menu(window)
+
     textEditor.draw_text(window)
     pygame.display.flip()
 
