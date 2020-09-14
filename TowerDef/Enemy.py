@@ -1,7 +1,6 @@
 import pygame
 
 class Enemy:
-
     def __init__(self, image_location, pos):
         self.image = pygame.image.load(image_location)
         self.pos = self.image.get_rect()

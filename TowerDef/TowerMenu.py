@@ -15,6 +15,7 @@ class TowerMenu:
         self.rect.centery, self.rect1.centery = 980, 1030
         self.rect1.centerx = screen_width / 2
         self.check = False
+
         # TileNumber that is usable in directory
         self.UsableTileList = [203, 204, 205, 206, 226, 227, 229, 245, 246, 247, 248, 249, 250, 251, 252, 291, 292, 268, 269]
 
@@ -23,14 +24,12 @@ class TowerMenu:
                 pygame.image.load("tile\\PNG\\Default size\\towerDefense_tile" + str(imageNum) + ".png"))
         self.q = self.get_button_pos_list(self.image1)
 
-
         self.rect_indicator = pygame.Rect(128, 128, self.q[0].width, self.q[0].height)
 
         self.active = False
         self.index = None
 
         self.towers_placed_list = []
-
 
         self.money = 600
 
@@ -58,7 +57,8 @@ class TowerMenu:
                 self.active = False
                 self.check = True
                 self.money -= 200
-            if self.active == False:
+
+            if not self.active:
                 for index, i in enumerate(self.q):
                     if self.rect_indicator == i:
                         self.rect_indicator = self.q[index]
