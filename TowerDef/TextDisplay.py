@@ -9,5 +9,5 @@ class TextDisplay:
     def change_text(self, text):
         self.text = self.font.render(text, False, (0,0,0))
 
-    def draw_text(self, window):
-        window.blit(self.text, (300, 5))
+    def draw_text(self, window, pos):
+        window.blit(self.text, pos)

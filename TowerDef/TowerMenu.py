@@ -32,6 +32,8 @@ class TowerMenu:
         self.towers_placed_list = []
 
 
+        self.money = 600
+
     def open_tower_menu(self, window):
         window.blit(self.image, self.rect)
         for i in range(len(self.q)):
@@ -49,13 +51,13 @@ class TowerMenu:
         if event.key == pygame.K_s:
             self.rect_indicator.move_ip(0, 64)
 
-        if event.key == pygame.K_RETURN:
+        if event.key == pygame.K_RETURN and self.money >= 200:
             if self.active:
                 self.towers_placed_list.append(self.q[self.index])
                 self.rect_indicator = pygame.Rect(0, 0, self.q[0].width, self.q[0].height)
                 self.active = False
                 self.check = True
-
+                self.money -= 200
             if self.active == False:
                 for index, i in enumerate(self.q):
                     if self.rect_indicator == i:

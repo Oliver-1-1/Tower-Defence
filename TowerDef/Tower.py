@@ -17,6 +17,10 @@ class Tower:
         self.pos_bullet = self.image_bullet.get_rect()
         self.bullet_speed = 0.5
 
+        self.image_bullet_explosion = pygame.image.load("flame.png")
+        self.pos_bullet_explosion = self.image_bullet_explosion.get_rect()
+        self.one = False
+
     def place_indicator(self, event, blocked_tiles, all_towers):
         if event.key == pygame.K_d:
             self.pos.move_ip(64, 0)
@@ -63,22 +67,28 @@ class Tower:
     def rotate_tower_to_enemy(self, angle):
         self.image = pygame.transform.rotate(self.original_image, angle)
 
-    def calc_prediction(self, enemy_pos, enemy_speed):
+    def calc_prediction(self, enemy_pos, enemy_speed, dt):
         a, b = enemy_pos.centerx - self.pos.centerx, \
                enemy_pos.centery - self.pos.centery
 
-        hypo = math.sqrt(a ** 2 + b ** 2)
-        time = hypo / self.bullet_speed
 
-        distance_travelled = time * enemy_speed
+        timeA = a / 2000 * dt
+        timeB = b / 2000 * dt
+        return timeA, timeB
 
-        final_b = distance_travelled + b
-        angle = math.degrees(-math.atan2(final_b, a))
-        return angle - 90
 
-    def move_bullet(self):
-        self.pos_bullet.move_ip(1, 1)
+    def move_bullet(self, speed):
+        self.pos_bullet.move_ip(speed[0], speed[1])
+
+    def test(self):
+        self.pos_bullet.center = self.pos.center
 
     def draw_bullet(self, window):
         window.blit(self.image_bullet, self.pos_bullet)
+
+    def draw_explosion(self, window, enemy_pos):
+        if not self.one:
+            self.pos_bullet_explosion.center = enemy_pos
+            self.one = True
+        window.blit(self.image_bullet_explosion, self.pos_bullet_explosion)
 
